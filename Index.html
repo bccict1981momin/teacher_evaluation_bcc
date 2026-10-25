@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      width: min(100% - 32px, 800px);
+      margin: 40px auto;
+      background: #edf3ef;
+    }
+
+    .app-container {
+      padding: clamp(20px, 4vw, 40px);
+      background: #ffffff;
+      border: 1px solid #d7e3dc;
+      border-radius: 12px;
+      box-shadow: 0 12px 32px rgba(35, 68, 50, 0.08);
+    }
+
+    #myForm {
+      visibility: hidden;
+    }
+
+    h1 {
+      font-size: clamp(1.5rem, 5vw, 2rem);
+      overflow-wrap: anywhere;
+      margin: 0;
+    }
+
+    .page-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .college-logo {
+      width: 96px;
+      height: 96px;
+      object-fit: contain;
+      flex: 0 0 auto;
+    }
+
+    h2 {
+      margin-bottom: 25px;
+    }
+
+    h3 {
+      margin: 0 0 20px;
+    }
+
+    .teacher-heading {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .teacher-heading h3 {
+      margin: 0;
+    }
+
+    .teacher-profile-placeholder {
+      display: grid;
+      flex: 0 0 72px;
+      width: 72px;
+      height: 72px;
+      place-items: center;
+      overflow: hidden;
+      border: 2px solid #d7e3dc;
+      border-radius: 50%;
+      background: #edf3ef;
+    }
+
+    .teacher-profile-placeholder svg {
+      width: 44px;
+      height: 44px;
+      fill: #64806d;
+    }
+
+    .option {
+      min-height: 48px;
+      margin: 10px 0;
+      padding: 12px 14px;
+      border: 1px solid #d7e3dc;
+      border-radius: 6px;
+      background: #f8fbf9;
+    }
+
+    .option label {
+      display: flex;
+      align-items: center;
+      min-height: 24px;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .option input[type="radio"] {
+      flex: 0 0 auto;
+      margin: 0;
+    }
+
+    .metadata-fields {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .metadata-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field-label {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .required-indicator {
+      color: #b42318;
+      font-weight: bold;
+    }
+
+    .required-note {
+      margin-top: -12px;
+      color: #52645a;
+      font-size: 0.9rem;
+    }
+
+    .metadata-field select,
+    .metadata-field input {
+      width: 100%;
+      min-height: 42px;
+      padding: 8px 10px;
+      border: 1px solid #9aaea1;
+      border-radius: 4px;
+      background: #fff;
+      font: inherit;
+    }
+
+    #commentBox1 {
+      display: none;
+      margin-top: 20px;
+    }
+    .commentBox {
+      display: none;
+      margin-top: 20px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      box-sizing: border-box;
+      resize: vertical;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    #message {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    #progress {
+      font-weight: bold;
+    }
+
+    .navigation {
+      display: flex;
+      gap: 12px;
+    }
+
+    .navigation button {
+      flex: 1;
+    }
+
+    button[hidden] {
+      display: none;
+    }
+    img {
+      display: block;
+      width: min(250px, 100%);
+      height: auto;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        margin: 20px auto;
+      }
+
+      .page-header {
+        align-items: flex-start;
+        gap: 14px;
+      }
+
+      .college-logo {
+        width: 72px;
+        height: 72px;
+      }
+
+      button {
+        width: 100%;
+      }
+
+      .navigation button {
+        width: auto;
+      }
+
+      .metadata-fields {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="app-container">
+  <header class="page-header">
+    <img class="college-logo" src="<?!= logoDataUri ?>" alt="Barishal Cadet College logo">
+    <h1>Teachers Evaluation Barishal Cadet College</h1>
+  </header>
+
+  <form id="myForm">
+    <img src=""> <figcaption>Jamuna Rani Biswas, Associate Proffesor </figcaption>
+  <div class="option">
+  <h2>
+    <input class="Teacher_name_1" id="teacher1" type="text" name="teacher1" value="Mrs. Jamuna Rani Biswas" style="display:none">
+  </h2>
+  </div>
+    <p><b>1. Subject Knowledge</b></p>
+
+    <div class="option">
+      <label>
+        <input
+          type="radio"
+          name="sk1"
+          value="5"
+          required
+          onchange="showComment1(false)">
+        Excellent
+      </label>
+    </div>
+    <div class="option">
+      <label>
+        <input
+          type="radio"
+          name="sk1"
+          value="4"
+          onchange="showComment1(false)">
+        Standard
+      </label>
+    </div>
+
+    <div class="option">
+      <label>
+        <input
+          type="radio"
+          name="sk1"
+          value="3"
+          onchange="showComment1(false)">
+        Good
+      </label>
+    </div>
+    <div class="option">
+      <label>
+        <input
+          type="radio"
+          name="sk1"
+          value="2"
+          onchange="showComment1(true)">
+        Satifactory
+      </label>
+    </div>
+    <div class="option">
+      <label>
+        <input
+          type="radio"
+          name="sk1"
+          value="1"
+          onchange="showComment1(true)">
+        Poor
+      </label>
+    </div>
+
+    <!-- Conditional comment box -->
+    <div id="commentBox1" class="commentBox">
+
+      <label for="comment1">
+        <b>Please explain:</b>
+      </label>
+
+      <textarea
+        id="comment1"
+        name="comment1"
+        placeholder="Enter your comment here..." required></textarea>
+
+    </div>
+    <p><b>2. Teaching Skill</b></p>
+
+    <div class="option">
+      <label>
+        <input
+          type="radio"
+          name="ts1"
+          value="5"
+          required
+          onchange="showComment2(false)">
+        Excellent
+      </label>
+    </div>
+    <div class="option">
+      <label>
+        <input
+          type="radio"
+          name="ts1"
+          value="4"
+          onchange="showComment2(false)">
+        Standard
+      </label>
+    </div>
+
+    <div class="option">
+      <label>
+        <input
+          type="radio"
+          name="ts1"
+          value="3"
+          onchange="showComment2(false)">
+        Good
+      </label>
+    </div>
+    <div class="option">
+      <label>
+        <input
+          type="radio"
+          name="ts1"
+          value="2"
+          onchange="showComment2(true)">
+        Satifactory
+      </label>
+    </div>
+    <div class="option">
+      <label>
+        <input
+          type="radio"
+          name="ts1"
+          value="1"
+          onchange="showComment2(true)">
+        Poor
+      </label>
+    </div>
+
+    <!-- Conditional comment box -->
+    <div id="commentBox2" class="commentBox">
+
+      <label for="comment2">
+        <b>Please explain:</b>
+      </label>
+
+      <textarea
+        id="comment2"
+        name="comment2"
+        placeholder="Enter your comment here..." required></textarea>
+
+    </div>
+
+    <p><b>3. Sincerity towards the Cadet</b></p>
+    <div class="option"><label><input type="radio" name="cm1" value="5" onchange="showComment3(false)" required> Excellent</label></div>
+    <div class="option"><label><input type="radio" name="cm1" value="4" onchange="showComment3(false)"> Standard</label></div>
+    <div class="option"><label><input type="radio" name="cm1" value="3" onchange="showComment3(false)"> Good</label></div>
+    <div class="option"><label><input type="radio" name="cm1" value="2" onchange="showComment3(true)"> Satisfactory</label></div>
+    <div class="option"><label><input type="radio" name="cm1" value="1" onchange="showComment3(true)"> Poor</label></div>
+    <div id="commentBox3" class="commentBox">
+      <label for="comment3"><b>Please explain:</b></label>
+      <textarea id="comment3" name="comment3" placeholder="Enter your comment here..."></textarea>
+    </div>
+
+    <p><b>4. Personality and Behaviour</b></p>
+    <div class="option"><label><input type="radio" name="cs1" value="5" onchange="showComment4(false)" required> Excellent</label></div>
+    <div class="option"><label><input type="radio" name="cs1" value="4" onchange="showComment4(false)"> Standard</label></div>
+    <div class="option"><label><input type="radio" name="cs1" value="3" onchange="showComment4(false)"> Good</label></div>
+    <div class="option"><label><input type="radio" name="cs1" value="2" onchange="showComment4(true)"> Satisfactory</label></div>
+    <div class="option"><label><input type="radio" name="cs1" value="1" onchange="showComment4(true)"> Poor</label></div>
+    <div id="commentBox4" class="commentBox">
+      <label for="comment4"><b>Please explain:</b></label>
+      <textarea id="comment4" name="comment4" placeholder="Enter your comment here..."></textarea>
+    </div>
+
+    <button type="submit">
+      Submit
+    </button>
+
+  </form>
+  <div id="message"></div>
+  </div>
+
+
+  <script>
+    const teachers = [
+      "Jamuna Rani Biswas, Associate Professor",
+      "Tawfiq Alam, Associate Professor",
+      "Tarequl Haque, Associate Professor",
+      "Pradip Kumar, Associate Professor"
+    ];
+    const criteria = [
+      { key: "sk1", title: "Subject Knowledge", commentKey: "comment1" },
+      { key: "ts1", title: "Teaching Skill", commentKey: "comment2" },
+      { key: "cm1", title: "Sincerity towards the Cadet", commentKey: "comment3" },
+      { key: "cs1", title: "Personality and Behaviour", commentKey: "comment4" }
+    ];
+    const ratings = [
+      [5, "👆 Excellent"],
+      [4, "👍 Very Good"],
+      [3, "👉 Above Average"],
+      [2, "👌 Satisfactory"],
+      [1, "👎 Poor"]
+    ];
+    const responses = teachers.map(function(teacher) {
+      return { teacher: teacher };
+    });
+    const metadata = {
+      className: "",
+      house: "",
+      form: "",
+      cadetName: "",
+      cadetNumber: ""
+    };
+    const form = document.getElementById("myForm");
+    const message = document.getElementById("message");
+    let currentIndex = -1;
+
+    form.innerHTML = [
+      '<p id="progress"></p>',
+      '<div id="stepContent"></div>',
+      '<div class="navigation">',
+      '<button id="previousButton" type="button">Previous</button>',
+      '<button id="nextButton" type="button">Next</button>',
+      '<button id="submitButton" type="submit" hidden>Submit All</button>',
+      '</div>'
+    ].join("");
+
+    const progress = document.getElementById("progress");
+    const stepContent = document.getElementById("stepContent");
+    const previousButton = document.getElementById("previousButton");
+    const nextButton = document.getElementById("nextButton");
+    const submitButton = document.getElementById("submitButton");
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, function(character) {
+        return {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;"
+        }[character];
+      });
+    }
+
+    function renderSelect(id, label, options, selectedValue) {
+      return '<label class="metadata-field" for="' + id + '">' +
+        '<span class="field-label">' + label +
+        '<span class="required-indicator" aria-hidden="true">*</span></span>' +
+        '<select id="' + id + '" required>' +
+        '<option value="">Select ' + label.toLowerCase() + '</option>' +
+        options.map(function(option) {
+          const selected = option === selectedValue ? " selected" : "";
+          return '<option value="' + escapeHtml(option) + '"' + selected + '>' + escapeHtml(option) + '</option>';
+        }).join("") +
+        '</select></label>';
+    }
+
+    function renderCadetDetails() {
+      progress.textContent = "Cadet Details";
+      stepContent.innerHTML =
+        '<section class="metadata-section" aria-label="Cadet information">' +
+        '<div class="metadata-fields">' +
+        renderSelect("classField", "Class", ["VII", "VIII", "IX", "X", "XI", "XII"], metadata.className) +
+        renderSelect("houseField", "House", ["Sher-E Bangla", "Shariutullah", "Showardy"], metadata.house) +
+        renderSelect("formField", "Form", ["A", "B"], metadata.form) +
+        '<label class="metadata-field" for="cadetNameField">Cadet Name<input id="cadetNameField" type="text" value="' + escapeHtml(metadata.cadetName) + '"></label>' +
+        '<label class="metadata-field" for="cadetNumberField">Cadet Number<input id="cadetNumberField" type="text" value="' + escapeHtml(metadata.cadetNumber) + '"></label>' +
+        '</div></section>';
+      previousButton.hidden = true;
+      nextButton.hidden = false;
+      nextButton.textContent = "Continue to Evaluations";
+      submitButton.hidden = true;
+      form.style.visibility = "visible";
+    }
+
+    function renderStep() {
+      if (currentIndex === -1) {
+        renderCadetDetails();
+        return;
+      }
+
+      const response = responses[currentIndex];
+      progress.textContent = "Teacher " + (currentIndex + 1) + " of " + teachers.length;
+      stepContent.innerHTML = '<section aria-labelledby="teacherEvaluationHeading">' +
+        '<h2 id="teacherEvaluationHeading">Teacher Evaluation</h2>' +
+        '<div class="teacher-heading">' +
+        '<span class="teacher-profile-placeholder" role="img" aria-label="Profile picture placeholder for ' + escapeHtml(response.teacher) + '">' +
+        '<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="16" r="10"></circle><path d="M5 44c0-10.5 8.5-17 19-17s19 6.5 19 17H5z"></path></svg>' +
+        '</span><h3>' + escapeHtml(response.teacher) + '</h3></div>' +
+        criteria.map(function(criterion, index) {
+          const selectedRating = Number(response[criterion.key] || 0);
+          const showComment = selectedRating > 0 && selectedRating <= 3;
+          return '<section class="question">' +
+            '<p><b>' + (index + 1) + ". " + criterion.title + "</b></p>" +
+            ratings.map(function(rating, ratingIndex) {
+              const checked = selectedRating === rating[0] ? " checked" : "";
+              const required = ratingIndex === 0 ? " required" : "";
+              return '<div class="option"><label>' +
+                '<input type="radio" name="' + criterion.key + '" value="' + rating[0] + '"' + required + checked + "> " +
+                rating[1] + "</label></div>";
+            }).join("") +
+            '<div id="commentBox-' + criterion.key + '" class="commentBox" style="display:' + (showComment ? "block" : "none") + '">' +
+            '<label for="' + criterion.commentKey + '"><b>Please explain:</b></label>' +
+            '<textarea id="' + criterion.commentKey + '" placeholder="Enter your comment here..."' + (showComment ? " required" : "") + ">" +
+            escapeHtml(response[criterion.commentKey] || "") + "</textarea></div>";
+        }).join("") +
+        '</section>';
+
+      stepContent.querySelectorAll('input[type="radio"]').forEach(function(input) {
+        input.addEventListener("change", function() {
+          const criterion = criteria.find(function(item) {
+            return item.key === input.name;
+          });
+          const commentBox = document.getElementById("commentBox-" + criterion.key);
+          const comment = document.getElementById(criterion.commentKey);
+          const required = Number(input.value) <= 3;
+          commentBox.style.display = required ? "block" : "none";
+          comment.required = required;
+          if (!required) comment.value = "";
+        });
+      });
+
+      previousButton.hidden = false;
+      nextButton.hidden = currentIndex === teachers.length - 1;
+      nextButton.textContent = "Next";
+      submitButton.hidden = currentIndex !== teachers.length - 1;
+      form.style.visibility = "visible";
+    }
+
+    function storeCurrentStep() {
+      if (currentIndex === -1) {
+        metadata.className = document.getElementById("classField").value;
+        metadata.house = document.getElementById("houseField").value;
+        metadata.form = document.getElementById("formField").value;
+        metadata.cadetName = document.getElementById("cadetNameField").value.trim();
+        metadata.cadetNumber = document.getElementById("cadetNumberField").value.trim();
+        return;
+      }
+      const response = responses[currentIndex];
+      criteria.forEach(function(criterion) {
+        const selected = stepContent.querySelector('input[name="' + criterion.key + '"]:checked');
+        if (selected) response[criterion.key] = selected.value;
+        response[criterion.commentKey] = document.getElementById(criterion.commentKey).value;
+      });
+    }
+
+    previousButton.addEventListener("click", function() {
+      storeCurrentStep();
+      currentIndex = currentIndex === 0 ? -1 : currentIndex - 1;
+      renderStep();
+    });
+
+    nextButton.addEventListener("click", function() {
+      if (!form.reportValidity()) return;
+      storeCurrentStep();
+      currentIndex = currentIndex === -1 ? 0 : currentIndex + 1;
+      renderStep();
+    });
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+      storeCurrentStep();
+      previousButton.disabled = true;
+      nextButton.disabled = true;
+      submitButton.disabled = true;
+      message.textContent = "Submitting evaluations...";
+
+      google.script.run
+        .withSuccessHandler(function(response) {
+          form.hidden = true;
+          message.textContent = response;
+        })
+        .withFailureHandler(function(error) {
+          previousButton.disabled = false;
+          nextButton.disabled = false;
+          submitButton.disabled = false;
+          message.textContent = error.message || "Submission failed. Please try again.";
+        })
+        .submitForm(responses.map(function(response) {
+          return Object.assign({}, response, metadata);
+        }));
+    });
+
+    renderStep();
+
+  </script>
+
+</body>
+</html>
